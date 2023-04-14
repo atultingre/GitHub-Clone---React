@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BiCodeBlock, BiGitRepoForked } from "react-icons/bi";
 import { BsFillStarFill } from "react-icons/bs";
 import { GoSmiley } from "react-icons/go";
-const Repository = ({ isLoading, repositories, username }) => {
+const Repository = ({ isLoading, repositories }) => {
   if (isLoading) {
     return (
       <div className="card repo-skeleton">
@@ -26,7 +26,6 @@ const Repository = ({ isLoading, repositories, username }) => {
       </div>
     );
   }
-
 
   return (
     <div>
