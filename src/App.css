@@ -1,73 +1,4 @@
 /*-----------------------------------*\
-  #HEADER
-\*-----------------------------------*/
-.header {
-  background-color: var(--background);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--header-height);
-  display: flex;
-  align-items: center;
-  transition: background-color var(--transiton-short);
-  z-index: 4;
-}
-
-header.active {
-  background-color: var(--surface);
-}
-
-.header .container {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.logo {
-  color: var(--on-background);
-  font-size: 26px;
-  /* line-height: 26; */
-  font-weight: var(--weight-bold);
-}
-
-.logo .text-primary {
-  display: inline;
-}
-
-
-.header-search {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 8px;
-  flex-grow: 1;
-}
-
-.header-search {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 8px;
-  flex-grow: 1;
-}
-
-.header:not(.search-active) .header-search {
-  margin-inline-start: auto;
-}
-
-
-.header:not(.search-active) .search-box,
-.header-search-active :where(.logo, .theme-btn),
-.search-toggler[aria-expanded="true"] .search-icon,
-.search-toggler[aria-expanded="false"] .close-icon,
-[data-theme="dark"] .theme-btn .moon-icon,
-[data-theme="light"] .theme-btn .sun-icon {
-  display: none;
-}
-
-
-/*-----------------------------------*\
   #CUSTOM PROPERTY
 \*-----------------------------------*/
 
@@ -113,7 +44,6 @@ header.active {
 .img-holder {
   aspect-ratio: var(--width) / var(--height);
   background-color: var(--alpha-50);
-  padding-bottom: 10px;
   overflow: hidden;
 }
 
@@ -671,7 +601,7 @@ header.active {
 }
 
 .tab-panel {
-  /* display: flex; */
+  display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 16px;
@@ -813,7 +743,7 @@ header.active {
 
   .profile :where(.avatar-circle, .avatar-rounded) {
     width: 200px;
-    /* margin-bottom: 10px; */
+    margin-bottom: 10px;
   }
 
   .profile {
@@ -822,10 +752,10 @@ header.active {
     top: calc(var(--header-height) + 16px);
   }
 
-  /* .profile .footer {
+  .profile .footer {
     display: block;
     margin-block-start: 24px;
-  } */
+  }
 
 
   /* tab */
@@ -847,10 +777,10 @@ header.active {
     padding-inline: 32px;
   }
 
-  /* .avatar-skeleton{
+  .avatar-skeleton {
     width: 200px;
     height: 200px;
-  } */
+  }
 
   /* .profile */
 

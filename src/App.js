@@ -4,12 +4,13 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 // BsArrowLeft,
 import axios from "axios";
 import "./App.css";
+import "./components/Header/Header.css";
 import Profile from "./components/Sidebar/Profile";
 import Navbar from "./components/Navbar/Navbar";
 import Repository from "./components/Repository/Repository";
-import Following from "./components/Following/Following";
-import Followers from "./components/Followers/Followers";
-import Forks from "./components/Forks/Forks";
+// import Following from "./components/Following/Following";
+// import Followers from "./components/Followers/Followers";
+// import Forks from "./components/Forks/Forks";
 
 const App = () => {
   // DARK MODE
@@ -32,21 +33,9 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [repositories, setRepositories] = useState([]);
+  const searchFieldRef = useRef(null);
 
   // setFollowers
-  const searchFieldRef = useRef(null);
-  //   const handleSearch = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://api.github.com/users/${username}`
-  //       );
-  //       setIsLoading(false);
-  //       setUserData(response.data);
-  //       handlefetchRepositories(username); // Call handlefetchRepositories with the username
-  //     } catch (error) {
-  //       console.error("Error fetching user data: ", error);
-  //     }
-  //   };
 
   const handleSearch = async () => {
     if (username !== "") {
@@ -56,8 +45,8 @@ const App = () => {
           `https://api.github.com/users/${username}`
         );
         setUserData(response.data);
-        setIsLoading(false);
         handlefetchRepositories(username);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
         setUserData(null);
@@ -99,21 +88,18 @@ const App = () => {
     fetchUserData();
   }, []);
 
-  // Fetch default user data on app load
   useEffect(() => {
-    const fetchUserDataRepo = async () => {
-      try {
-        const response = await axios.get(
-          "https://api.github.com/users/atultingre/repos"
-        );
-        setRepositories(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setIsLoading(false);
-      }
+    const fetchUserRepo = async () => {
+      fetch("https://api.github.com/users/atultingre/repos")
+        .then((response) => response.json())
+        .then((data) => {
+          setRepositories(data); // Do something with the fetched data
+          setIsLoading(false);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+      setIsLoading(false);
     };
-    fetchUserDataRepo();
+    fetchUserRepo();
   }, []);
 
   return (
@@ -124,24 +110,6 @@ const App = () => {
             <span className="text-primary">Git</span>InSight
           </a>
           <div className="header-search">
-            {/* <button className="icon-btn search-toggler" aria-controls="searchBox">
-                                <span className="material-symbols-rounded search-icon" aria-hidden="true">
-                                    <BsSearch/>
-                                </span>
-                                <span className="material-symbols-rounded close-icon" aria-hidden="true">
-                                    {/* {/* <BsArrowLeft/> */}
-            {/* </span> */}
-            {/* </button> */}
-            <span
-              className="material-symbols-rounded leading-icon"
-              aria-hidden="true">
-              {/* <BsSearch />   */}
-            </span>
-            <span
-              className="material-symbols-rounded close-icon"
-              aria-hidden="true">
-              {/* <BsArrowLeft/>  */}{" "}
-            </span>
             <div className="search-box" id="searchBox">
               <span
                 className="material-symbols-rounded leading-icon"
@@ -199,16 +167,21 @@ const App = () => {
                     exact
                     path="/"
                     element={
-                      <Repository repositories={repositories} />
+                      <Repository repositories={repositories} username={username}/>
                     }></Route>
-                  <Route
+                  {/* <Route
                     exact
                     path="/following"
-                    element={<Following username={username} />}></Route>
-                  <Route
+                    element={<Following username={username} />}></Route> */}
+                  {/* <Route
                     exact
                     path="/followers"
-                    element={<Followers username={username} />}></Route>
+                    element={
+                      <Followers
+                        username={username}
+                        setUsername={setUsername}
+                      />
+                    }></Route> */}
                   {/* <Route exact path="/forks" element={<Forks repositories={repositories}  isLoading={isLoading}/>}></Route> */}
                 </Routes>
               </div>

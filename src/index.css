@@ -1,28 +1,3 @@
-:root {
-  --background-color: #ffffff; /* light mode background color */
-  --text-color: #000000; /* light mode text color */
-  --accent-color: #007bff; /* light mode accent color */
-}
-
-.dark-mode {
-  --background-color: #000000; /* dark mode background color */
-  --text-color: #ffffff; /* dark mode text color */
-  --accent-color: #66c2ff; /* dark mode accent color */
-}
-
-/* Header.css or styled-components for Header component */
-.header {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  /* ... other styles */
-}
-
-.dark-mode .header {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  /* ... other styles for dark mode */
-}
-
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital@1&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 

@@ -9,15 +9,15 @@ const Navbar = ({ handlefetchfollowing }) => {
         <Link className="tab-btn" aria-selected="true" to="/">
           Repositories
         </Link>
-        <Link
+        {/* <Link
           onClick={handlefetchfollowing}
           className="tab-btn"
           to="/following">
           Following
-        </Link>
-        <Link className="tab-btn" to="/followers">
+        </Link> */}
+        {/* <Link className="tab-btn" to="/followers">
           Followers
-        </Link>
+        </Link> */}
         {/* <Link className="tab-btn" to="/forks">
                 Forks
               </Link> */}

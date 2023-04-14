@@ -16,10 +16,10 @@ const FollowingList = ({ username }) => {
         if (response.ok) {
           const data = await response.json();
           setFollowing(data);
+          setIsLoading(false);
         } else {
           setError("Error fetching following list: " + response.statusText);
         }
-        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching following list:", error);
         setError("Error fetching following list: " + error.message);
@@ -54,10 +54,10 @@ const FollowingList = ({ username }) => {
   }
 
   return (
-    <div>
-      <ul>
-        {following.map((user) => (
-          <article className="card follower-card" key={user.login}>
+    
+    <article className="card follower-card" >
+    {following.map((user) => (
+          <div key={user.login}>
             <figure className="avatar-circle img-holder">
               <img
                 src={user.avatar_url}
@@ -71,7 +71,8 @@ const FollowingList = ({ username }) => {
             <h3 className="card-title">{user.login}</h3>
             <button
               className="icon-btn"
-              aria-label={`Go to ${user.login}'s profile`}>
+              aria-label={`Go to ${user.login}'s profile`}
+              >
               <a
                 href={user.html_url}
                 className="material-symbols-rounded"
@@ -79,10 +80,9 @@ const FollowingList = ({ username }) => {
                 <FaLink />
               </a>
             </button>
-          </article>
-        ))}
-      </ul>
     </div>
+        ))}
+          </article>
   );
 };
 
