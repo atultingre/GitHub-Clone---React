@@ -73,6 +73,7 @@
     font-weight:  var(--weight-semiBold);
   }
 }
+
 @media (min-width: 768px) {
   .logo {
     display: inline;

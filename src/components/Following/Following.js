@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState} from "react";
 import { FaLink } from "react-icons/fa";
 import { GoSmiley } from "react-icons/go";
 
-const FollowingList = ({ username }) => {
+const Following = ({ username }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [following, setFollowing] = useState([]);
 
   useEffect(() => {
@@ -18,11 +17,11 @@ const FollowingList = ({ username }) => {
           setFollowing(data);
           setIsLoading(false);
         } else {
-          setError("Error fetching following list: " + response.statusText);
+          console.error("Error fetching following list:", response.statusText);
+          setIsLoading(false);
         }
       } catch (error) {
         console.error("Error fetching following list:", error);
-        setError("Error fetching following list: " + error.message);
         setIsLoading(false);
       }
     };
@@ -30,60 +29,49 @@ const FollowingList = ({ username }) => {
     fetchFollowing();
   }, [username]);
 
-  if (isLoading) {
-    return (
-      <div className="card follower-skeleton">
-        <div className="skeleton avatar-skeleton"></div>
-        <div className="skeleton title-skeleton"></div>
-      </div>
-    );
-  }
-
-  if (!Array.isArray(following) || following.length === 0) {
-    return (
-      <div>
-        <div className="error-content">
-          <p className="title-1">
-            Oops!
-            <GoSmiley style={{ display: "inline" }} />
-          </p>
-          <p className="text">Doesn't have any follo yet.</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    
-    <article className="card follower-card" >
-    {following.map((user) => (
-          <div key={user.login}>
-            <figure className="avatar-circle img-holder">
-              <img
-                src={user.avatar_url}
-                alt={user.login}
-                className="img-cover"
-                width="56"
-                height="56"
-                loading="lazy"
-              />
-            </figure>
-            <h3 className="card-title">{user.login}</h3>
-            <button
-              className="icon-btn"
-              aria-label={`Go to ${user.login}'s profile`}
-              >
-              <a
-                href={user.html_url}
-                className="material-symbols-rounded"
-                aria-hidden="true">
-                <FaLink />
-              </a>
-            </button>
-    </div>
-        ))}
-          </article>
+    <>
+      <div className=" tab-panel">
+        {isLoading ? (
+          <div className="card follower-skeleton">
+            <div className="skeleton avatar-skeleton"></div>
+            <div className="skeleton title-skeleton"></div>
+          </div>
+        ) : following.length > 0 ? (
+          following.map((user) => (
+            <div className=" card" key={user.login}>
+              <article className="follower-card">
+                <figure className="avatar-circle img-holder">
+                  <img
+                    className="img-cover"
+                    width="56px"
+                    height="56px"
+                    loading="lazy"
+                    src={user.avatar_url}
+                    alt={user.login}
+                  />
+                </figure>
+                <h3 className="card-title">{user.login}</h3>
+                <button className="icon-btn">
+                  <a href={user.html_url} className="material-symbols-rounded">
+                    <FaLink />
+                  </a>
+                </button>
+              </article>
+            </div>
+          ))
+        ) : (
+          <div className="error-content">
+            <p className="title-1">
+              Oops!
+              <GoSmiley style={{ display: "inline" }} />
+            </p>
+            <p className="text">Doesn't have any following yet.</p>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
-export default FollowingList;
+export default Following;

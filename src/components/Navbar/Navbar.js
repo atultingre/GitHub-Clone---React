@@ -5,22 +5,21 @@ import "./Navbar.css";
 const Navbar = ({ handlefetchfollowing }) => {
   return (
     <section className="tab-container">
+    <Link path="/"/>
       <div className=" tab-list" aria-label="Tab navigation" role="tablist">
-        <Link className="tab-btn" aria-selected="true" to="/">
-          Repositories
+
+        <Link className="tab-btn" aria-selected="true" to="/repos">
+          <button>Repositories</button>
         </Link>
-        {/* <Link
+        <Link
           onClick={handlefetchfollowing}
           className="tab-btn"
           to="/following">
           Following
-        </Link> */}
+        </Link>
         {/* <Link className="tab-btn" to="/followers">
           Followers
         </Link> */}
-        {/* <Link className="tab-btn" to="/forks">
-                Forks
-              </Link> */}
       </div>
     </section>
   );
