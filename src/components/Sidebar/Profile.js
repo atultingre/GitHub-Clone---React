@@ -1,31 +1,21 @@
-import React from "react";
 import { IoMdOpen } from "react-icons/io";
 import { ImEarth, ImLocation2 } from "react-icons/im";
 import { BsTwitter } from "react-icons/bs";
 import { MdApartment } from "react-icons/md";
 import Footer from "../Footer/Footer";
+import { numberToKilo } from "../Functions";
 
-const Profile = ({ userData, isLoading }) => {
-  const numberToKilo = function (number) {
-    const /**{String}*/ numStr = String(number);
+const Profile = ({ userData, isLoading}) => {
+  // const [, setIsLoading] = useState(true);
 
-    if (numStr.length <= 3) {
-      return numStr;
-    } else if (numStr.length >= 4 && numStr.length <= 5) {
-      return `${numStr.slice(0, -3)}.${numStr.slice(-3, -2)}k`;
-    } else if (numStr.length === 6) {
-      return `${numStr.slice(0, -3)}k`;
-    } else {
-      return `${numStr.slice(0, -6)}M`;
-    }
-  };
+  
 
   return (
     <>
       <div>
         {isLoading ? (
           <div>
-            <section className="profile" data-profile-card>
+            <section className="profile">
               <div className="profile-skeleton">
                 <div className="skeleton avatar-skeleton"></div>
                 <div className="skeleton title-skeleton"></div>
@@ -56,14 +46,14 @@ const Profile = ({ userData, isLoading }) => {
               target="_blank"
               rel="noreferrer"
               className="btn btn-secondary">
-              <span className="material-symbols-rounded" aria-hidden="true">
+              <span className="material-symbols-rounded">
                 <IoMdOpen />
               </span>
               <span className="open">See on Github</span>
             </a>
             <ul className="profile-meta">
               <li className="meta-item">
-                <span className="material-symbols-rounded" aria-hidden="true">
+                <span className="material-symbols-rounded">
                   <ImLocation2 />
                 </span>
                 <span className="meta-text">
@@ -71,7 +61,7 @@ const Profile = ({ userData, isLoading }) => {
                 </span>
               </li>
               <li className="meta-item">
-                <span className="material-symbols-rounded" aria-hidden="true">
+                <span className="material-symbols-rounded">
                   <MdApartment />
                 </span>
                 <span className="meta-text">
@@ -79,7 +69,7 @@ const Profile = ({ userData, isLoading }) => {
                 </span>
               </li>
               <li className="meta-item">
-                <span className="material-symbols-rounded" aria-hidden="true">
+                <span className="material-symbols-rounded">
                   <ImEarth />
                 </span>
                 <a
@@ -91,12 +81,16 @@ const Profile = ({ userData, isLoading }) => {
                 </a>
               </li>
               <li className="meta-item">
-                <span className="material-symbols-rounded" aria-hidden="true">
+                <span className="material-symbols-rounded">
                   <BsTwitter />
                 </span>
-                <span className="meta-text">
-                  {userData.twitter ? userData.twitter : ""}
-                </span>
+                <a
+                  href={`https://twitter.com/${userData.twitter_username}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="meta-text">
+                  {userData.twitter_username ? userData.twitter_username : ""}
+                </a>
               </li>
             </ul>
             <ul className="profile-stats">
@@ -113,10 +107,10 @@ const Profile = ({ userData, isLoading }) => {
                 Following
               </li>
             </ul>
-        <Footer />
+            <Footer  />
           </div>
         ) : (
-          <section className="error" data-error>
+          <section className="error">
             <p className="title-1">Oops! :(</p>
             <p className="text">There is no account with this username yet.</p>
           </section>

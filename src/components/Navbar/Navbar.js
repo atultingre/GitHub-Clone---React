@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-const Navbar = ({ handlefetchfollowing }) => {
+const Navbar = () => {
+  const [activeTab, setActiveTab] = useState("repos");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <section className="tab-container">
-    <Link path="/"/>
-      <div className=" tab-list" aria-label="Tab navigation" role="tablist">
-
-        <Link className="tab-btn" aria-selected="true" to="/repos">
-          <button>Repositories</button>
+      <div className="tab-list">
+        <Link className={activeTab === "repos" ? "tab-btn active" : "tab-btn"} aria-selected={activeTab === "repos"} onClick={() => handleTabClick("repos")} to="/repos" >
+          Repositories
         </Link>
-        <Link
-          onClick={handlefetchfollowing}
-          className="tab-btn"
-          to="/following">
+        <Link className={activeTab === "following" ? "tab-btn active" : "tab-btn"} aria-selected={activeTab === "following"} onClick={() => {  handleTabClick("following");  }} to="/following"  >
           Following
         </Link>
-        {/* <Link className="tab-btn" to="/followers">
+        {/* <Link  className={activeTab === "followers" ? "tab-btn active" : "tab-btn"} aria-selected={activeTab === "followers"} onClick={() => handleTabClick("followers")} to="/followers" >
           Followers
         </Link> */}
       </div>

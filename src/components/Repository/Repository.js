@@ -28,22 +28,41 @@ const Repository = ({ username }) => {
     fetchRepositories();
   }, [username]);
 
+  if (isLoading) {
+    const skeletons = Array.from({ length: 6 }).map((_, index) => (
+      <div className="card repo-skeleton" key={index}>
+        <div className="card-body">
+          <div className="skeleton title-skeleton"></div>
+          <div className="skeleton text-skeleton text-1"></div>
+          <div className="skeleton text-skeleton text-2"></div>
+        </div>
+      </div>
+    ));
+    return skeletons;
+  }
+
+  if (!Array.isArray(repositories) || repositories.length === 0) {
+    return (
+      <div className="error-content">
+        <p className="title-1">
+          Oops!
+          <GoSmiley style={{ display: "inline" }} />
+        </p>
+        <p className="text">Doesn't have any public repositories yet.</p>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <div
-        className="tab-panel"
-        role="tabpanel"
-        id="panel-1"
-        aria-labelledby="tab-1"
-        tabIndex="0"
-        data-tab-panel
-        data-repo-panel
-        >
-        {/* <h2 className="sr-only">Repositories</h2> */}
+      <div className="tab-panel">
         {isLoading ? (
-          <div className="card follower-skeleton">
-            <div className="skeleton avatar-skeleton"></div>
-            <div className="skeleton title-skeleton"></div>
+          <div className="card repo-skeleton">
+            <div className="card-body">
+              <div className="skeleton title-skeleton"></div>
+              <div className="skeleton text-skeleton text-1"></div>
+              <div className="skeleton text-skeleton text-2"></div>
+            </div>
           </div>
         ) : repositories.length > 0 ? (
         repositories.map((repo) => (
@@ -61,19 +80,19 @@ const Repository = ({ username }) => {
             </div>
             <div className="card-footer">
               <div className="meta-item">
-                <span className="material-symbols-rounded" aria-hidden="true">
+                <span className="material-symbols-rounded">
                   <BiCodeBlock />
                 </span>
                 <span className="span">{repo.language ? repo.language : ""}</span>
               </div>
               <div className="meta-item">
-                <span className="material-symbols-rounded" aria-hidden="true">
+                <span className="material-symbols-rounded">
                   <BsFillStarFill />
                 </span>
                 <span className="span">{numberToKilo(repo.stargazers_count)}</span>
               </div>
               <div className="meta-item">
-                <span className="material-symbols-rounded" aria-hidden="true">
+                <span className="material-symbols-rounded">
                   <BiGitRepoForked />
                 </span>
                 <span className="span">{numberToKilo(repo.forks)}</span>
@@ -82,12 +101,14 @@ const Repository = ({ username }) => {
           </article>
         ))
         ) : (
-          <div className="error-content">
-            <p className="title-1">
+          <div className="tab-panel">
+            <div className="error-content">
+              <p className="title-1">
               Oops!
               <GoSmiley style={{ display: "inline" }} />
             </p>
-            <p className="text">Doesn't have any following yet.</p>
+              <p className="text">Doesn't have any public repositories yet.</p>
+            </div>
           </div>
         )}
       </div>
@@ -107,7 +128,7 @@ export default Repository;
   // </div>
 // ) : (
 
-//   <div className="error-content">
-//   <p className="title-1">Oops! :(</p>
-//   <p className="text">Doesn't have any public repositories yet.</p>
-// </div>
+  // <div className="error-content">
+  //   <p className="title-1">Oops! :(</p>
+  //   <p className="text">Doesn't have any public repositories yet.</p>
+  //  </div>
