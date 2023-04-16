@@ -2,14 +2,14 @@ import React, { useEffect, useState} from "react";
 import { FaLink } from "react-icons/fa";
 import { GoSmiley } from "react-icons/go";
 
-const Following = ({ username }) => {
-  const [isLoading, setIsLoading] = useState(true);
+const Following = ({ username , isLoading, setIsLoading}) => {
+  // const [isLoading, setIsLoading] = useState(true);
   const [following, setFollowing] = useState([]);
 
   useEffect(() => {
     const fetchFollowing = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const response = await fetch(
           `https://api.github.com/users/${username}/following`
         );
@@ -18,18 +18,20 @@ const Following = ({ username }) => {
           setFollowing(data);
           setIsLoading(false);
         } else {
-          console.error("Error fetching following list:", response.statusText);
           setIsLoading(false);
+          console.error("Error fetching following list:", response.statusText);
         }
       } catch (error) {
+        setIsLoading(false);
         console.error("Error fetching following list:", error);
-        // setIsLoading(false);
       }
     };
+    setTimeout(()=>{
+      fetchFollowing();
+    },1000)
+  }, [username,setIsLoading]);
 
-    fetchFollowing();
-  }, [username]);
-
+  
 
 
   if (isLoading) {
@@ -81,17 +83,17 @@ const Following = ({ username }) => {
             </div>
           ))
         ) : (
-          <div className=" tab-panel" >
-          <div className="error-content" style={{display: "flex", justifyContent: "center", textAlign: "center"}}>
+          <div className="error-content">
             <p className="title-1">
               Oops!
               <GoSmiley style={{ display: "inline" }} />
             </p>
             <p className="text">Doesn't have any following yet.</p>
           </div>
-          </div>
         )}
       </div>
+          {/* <div className=" tab-panel" > */}
+      {/* </div> */}
     </>
   );
 };

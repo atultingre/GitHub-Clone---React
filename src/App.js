@@ -56,7 +56,7 @@ const App = () => {
           `https://api.github.com/users/${username}`
         );
         setUserData(response.data);
-        console.log(response.data)
+        // console.log(response.data)
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -94,7 +94,8 @@ const App = () => {
               <span className="material-symbols-rounded leading-icon">
                 <BsSearch />
               </span>
-              <input type="search"  name="search" placeholder="Search username" className="search-field label-1" value={username} onChange={(e) => setUsername(e.target.value)}   onKeyPress={handleKeyPress}/>
+              <form onSubmit={(e)=> e.preventDefault()}></form>
+              <input type="search"  name="search" placeholder="Search username" className="search-field label-1" value={username} onChange={(e) => setUsername(e.target.value)}   onKeyPress={handleKeyPress} required/>
               <button className="search-btn" onClick={handleSearch} >
                 <span className="material-symbols-rounded">
                   <BsSearch />
@@ -110,14 +111,14 @@ const App = () => {
       </header>
       <main className="main" id="main">
         <div className="container">
-          <Profile userData={userData} isLoading={isLoading} />
+          <Profile userData={userData} isLoading={isLoading}/>
           <Router>
             <section className="tab-container">
               <Navbar />
               <div className="tab-panel">
                 <Routes>
-                  <Route exact path="/repos"  element={  <Repository username={username} /> }></Route>
-                  <Route  exact path="/following" element={<Following username={username}/>}></Route>
+                  <Route exact path="/repos"  element={  <Repository username={username} isLoading={isLoading} setIsLoading={setIsLoading}/> }></Route>
+                  <Route  exact path="/following" element={<Following username={username} isLoading={isLoading} setIsLoading={setIsLoading}/>}></Route>
                   {/* <Route exact path="/followers" element={ <Followers username={username} /> }></Route> */}
                 </Routes>
               </div>
