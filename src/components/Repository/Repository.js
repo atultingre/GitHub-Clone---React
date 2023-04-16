@@ -6,10 +6,10 @@ import {numberToKilo} from "../Functions.js"
 
 
 
-const Repository = ({ username,isLoading, setIsLoading }) => {
+const Repository = ({ username }) => {
 
   const [repositories, setRepositories] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRepositories = async () => {
@@ -27,7 +27,7 @@ const Repository = ({ username,isLoading, setIsLoading }) => {
     setTimeout(()=>{
       fetchRepositories()
     },1000)
-  }, [username,setIsLoading]);
+  }, [username]);
 
   if (isLoading) {
     const skeletons = Array.from({ length: 6 }).map((_, index) => (

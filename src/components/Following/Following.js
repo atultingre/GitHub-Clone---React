@@ -2,8 +2,8 @@ import React, { useEffect, useState} from "react";
 import { FaLink } from "react-icons/fa";
 import { GoSmiley } from "react-icons/go";
 
-const Following = ({ username , isLoading, setIsLoading}) => {
-  // const [isLoading, setIsLoading] = useState(true);
+const Following = ({ username }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [following, setFollowing] = useState([]);
 
   useEffect(() => {

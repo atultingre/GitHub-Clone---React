@@ -117,8 +117,8 @@ const App = () => {
               <Navbar />
               <div className="tab-panel">
                 <Routes>
-                  <Route exact path="/repos"  element={  <Repository username={username} isLoading={isLoading} setIsLoading={setIsLoading}/> }></Route>
-                  <Route  exact path="/following" element={<Following username={username} isLoading={isLoading} setIsLoading={setIsLoading}/>}></Route>
+                  <Route exact path="/repos"  element={  <Repository username={username} /> }></Route>
+                  <Route  exact path="/following" element={<Following username={username} />}></Route>
                   {/* <Route exact path="/followers" element={ <Followers username={username} /> }></Route> */}
                 </Routes>
               </div>
