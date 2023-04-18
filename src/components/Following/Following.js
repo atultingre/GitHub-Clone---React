@@ -92,8 +92,6 @@ const Following = ({ username }) => {
           </div>
         )}
       </div>
-          {/* <div className=" tab-panel" > */}
-      {/* </div> */}
     </>
   );
 };

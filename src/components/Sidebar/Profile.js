@@ -6,9 +6,6 @@ import Footer from "../Footer/Footer";
 import { numberToKilo } from "../Functions";
 
 const Profile = ({ userData, isLoading}) => {
-  // const [, setIsLoading] = useState(true);
-
-  
 
   return (
     <>
