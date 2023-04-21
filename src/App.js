@@ -47,7 +47,6 @@ const App = () => {
       <main className="main" id="main">
         <div className="container">
           <Profile userData={userData} isLoading={isLoading}/>
-          <Router>
             <section className="tab-container">
               <Navbar />
               <div className="tab-panel">
@@ -57,7 +56,6 @@ const App = () => {
                 </Routes>
               </div>
             </section>
-          </Router>
         </div>
       </main>
     </div>
