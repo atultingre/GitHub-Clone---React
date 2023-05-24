@@ -4,7 +4,7 @@ import { BsSearch, BsSunFill, BsFillMoonFill } from "react-icons/bs";
 const Header = ({ username, setUsername, handleSearch }) => {
   //DARK MODE
 
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
