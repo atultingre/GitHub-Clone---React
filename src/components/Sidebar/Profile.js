@@ -5,8 +5,7 @@ import { MdApartment } from "react-icons/md";
 import Footer from "../Footer/Footer";
 import { numberToKilo } from "../Functions";
 
-const Profile = ({ userData, isLoading}) => {
-
+const Profile = ({ userData, isLoading }) => {
   return (
     <>
       <div>
@@ -37,7 +36,7 @@ const Profile = ({ userData, isLoading}) => {
             </figure>
             <h1 className="title-2">{userData.name}</h1>
             <p className="username text-primary">{userData.login}</p>
-            <p className="bio">{userData.bio}</p>
+            {userData.bio ? <p className="bio">{userData.bio}</p> : ""}
             <a
               href={userData.html_url}
               target="_blank"
@@ -49,69 +48,98 @@ const Profile = ({ userData, isLoading}) => {
               <span className="open">See on Github</span>
             </a>
             <ul className="profile-meta">
-              <li className="meta-item">
-                <span className="material-symbols-rounded">
-                  <ImLocation2 />
-                </span>
-                <span className="meta-text">
-                  {userData.location ? userData.location : ""}
-                </span>
-              </li>
-              <li className="meta-item">
-                <span className="material-symbols-rounded">
-                  <MdApartment />
-                </span>
-                <span className="meta-text">
-                  {userData.company ? userData.company : ""}
-                </span>
-              </li>
-              <li className="meta-item">
-                <span className="material-symbols-rounded">
-                  <ImEarth />
-                </span>
-                <a
-                  href={userData.blog}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="meta-text">
-                  {userData.blog ? userData.blog : ""}
-                </a>
-              </li>
-              <li className="meta-item">
-                <span className="material-symbols-rounded">
-                  <BsTwitter />
-                </span>
-                <a
-                  href={`https://twitter.com/${userData.twitter_username}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="meta-text">
-                  {userData.twitter_username ? userData.twitter_username : ""}
-                </a>
-              </li>
+              {userData.location ? (
+                <li className="meta-item">
+                  <span className="material-symbols-rounded">
+                    <ImLocation2 />
+                  </span>
+                  <span className="meta-text">{userData.location}</span>
+                </li>
+              ) : (
+                ""
+              )}
+              {userData.company ? (
+                <li className="meta-item">
+                  <span className="material-symbols-rounded">
+                    <MdApartment />
+                  </span>
+                  <span className="meta-text">{userData.company}</span>
+                </li>
+              ) : (
+                ""
+              )}
+              {userData.blog ? (
+                <li className="meta-item">
+                  <span className="material-symbols-rounded">
+                    <ImEarth />
+                  </span>
+                  <a
+                    href={userData.blog}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="meta-text">
+                    {userData.blog}
+                  </a>
+                </li>
+              ) : (
+                ""
+              )}
+              {userData.twitter_username ? (
+                <li className="meta-item">
+                  <span className="material-symbols-rounded">
+                    <BsTwitter />
+                  </span>
+                  <a
+                    href={`https://twitter.com/${userData.twitter_username}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="meta-text">
+                    {userData.twitter_username}
+                  </a>
+                </li>
+              ) : (
+                ""
+              )}
             </ul>
             <ul className="profile-stats">
+            {
+              userData.public_repos?
               <li className="stats-item">
                 <span className="body">{userData.public_repos}</span>
                 Repos
               </li>
-              <li className="stats-item">
-                <span className="body">{numberToKilo(userData.followers)}</span>
-                Followers
-              </li>
-              <li className="stats-item">
-                <span className="body">{numberToKilo(userData.following)}</span>
-                Following
-              </li>
+              :""
+            }
+              {userData.followers ? (
+                <li className="stats-item">
+                  <span className="body">
+                    {numberToKilo(userData.followers)}
+                  </span>
+                  Followers
+                </li>
+              ) : (
+                ""
+              )}
+              {userData.following ? (
+                <li className="stats-item">
+                  <span className="body">
+                    {numberToKilo(userData.following)}
+                  </span>
+                  Following
+                </li>
+              ) : (
+                ""
+              )}
             </ul>
-            <Footer  />
+            <Footer />
           </div>
-        ) : (
+        ) : 
           <section className="error">
             <p className="title-1">Oops! :(</p>
             <p className="text">There is no account with this username yet.</p>
           </section>
-        )}
+        }
+        
       </div>
     </>
   );

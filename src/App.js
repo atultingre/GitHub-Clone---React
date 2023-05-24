@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import "./components/Header/Header.css";
@@ -13,18 +13,23 @@ const App = () => {
 
   // // HEADER
   const [userData, setUserData] = useState(null);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("atultingre");
   const [isLoading, setIsLoading] = useState(true);
+  const [repositories, setRepositories] = useState([]);
 
   const handleApiCall = async () => {
     if (username !== "") {
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          `https://api.github.com/users/${username}`
-        );
-        setUserData(response.data);
-        // console.log(response.data)
+        const [user,repo] = await Promise.all([
+
+          axios.get(
+            `https://api.github.com/users/${username}`
+            ),
+            axios.get(`https://api.github.com/users/${username}/repos`)
+          ]) 
+        setUserData(user.data);
+        setRepositories(repo.data)
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -35,12 +40,15 @@ const App = () => {
       setUserData(null);
     }
   };
-
-
+  
+  useEffect(() => {
+    handleApiCall();
+    // eslint-disable-next-line
+  }, []);
+  
   const handleSearch = () => {
     handleApiCall();
   };
-
   return (
     <div>
       <Header username={username} setUsername={setUsername} handleSearch={handleSearch} />
@@ -51,7 +59,8 @@ const App = () => {
               <Navbar />
               <div className="tab-panel">
                 <Routes>
-                  <Route exact path="/repos"  element={  <Repository username={username} /> }></Route>
+                  <Route path="/"  element={  <Repository username={username} repositories={repositories} isLoading={isLoading}/> }></Route>
+                  <Route exact path="/repos"  element={  <Repository username={username} repositories={repositories} isLoading={isLoading}/> }></Route>
                   <Route  exact path="/following" element={<Following username={username} />}></Route>
                 </Routes>
               </div>

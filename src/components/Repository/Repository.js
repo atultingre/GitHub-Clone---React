@@ -1,42 +1,42 @@
-import React, { useEffect, useRef, useState } from "react";
+// import React, { useEffect, useRef, useState } from "react";
 import { BiCodeBlock, BiGitRepoForked } from "react-icons/bi";
 import { BsFillStarFill } from "react-icons/bs";
 import { GoSmiley } from "react-icons/go";
 import { numberToKilo } from "../Functions.js";
 
-const Repository = ({ username }) => {
-  const [repositories, setRepositories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const effectRan = useRef(false);
+const Repository = ({ repositories, isLoading }) => {
+  // const [repositories, setRepositories] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const effectRan = useRef(false);
 
-  useEffect(() => {
-    if (effectRan.current === false) {
-      const fetchRepositories = async () => {
-        try {
-          const response = await fetch(
-            `https://api.github.com/users/${username}/repos`
-          );
-          const data = await response.json();
-          setRepositories(data);
-          setIsLoading(false);
-          // console.log(data)
-        } catch (error) {
-          console.error("Error fetching repositories: ", error);
-          setIsLoading(false);
-        }
-      };
-      setTimeout(() => {
-        fetchRepositories();
-      }, 1000);
+  // useEffect(() => {
+  //   if (effectRan.current === false) {
+  //     const fetchRepositories = async () => {
+  //       try {
+  //         const response = await fetch(
+  //           `https://api.github.com/users/${username}/repos`
+  //         );
+  //         const data = await response.json();
+  //         setRepositories(data);
+  //         setIsLoading(false);
+  //         // console.log(data)
+  //       } catch (error) {
+  //         console.error("Error fetching repositories: ", error);
+  //         setIsLoading(false);
+  //       }
+  //     };
+  //     setTimeout(() => {
+  //       fetchRepositories();
+  //     }, 1000);
 
-      return () => {
-        effectRan.current = true;
-      };
-    }
-  }, [username]);
+  //     return () => {
+  //       effectRan.current = true;
+  //     };
+  //   }
+  // }, [username]);
 
   if (isLoading) {
-    const skeletons = Array.from({ length: 6 }).map((_, index) => (
+    const skeletons = Array.from({ length: 12 }).map((_, index) => (
       <div className="card repo-skeleton" key={index}>
         <div className="card-body">
           <div className="skeleton title-skeleton"></div>
@@ -82,22 +82,26 @@ const Repository = ({ username }) => {
                   className="card-title">
                   <h3 className="title-3">{repo.name}</h3>
                 </a>
-                <p className="card-text">
-                  {repo.description ? repo.description : ""}
-                </p>
+                {repo.description ? (
+                  <p className="card-text">{repo.description}</p>
+                ) : (
+                  ""
+                )}
                 <span className="badge">
                   {repo.isPrivate ? "Private" : "Public"}
                 </span>
               </div>
               <div className="card-footer">
-                <div className="meta-item">
-                  <span className="material-symbols-rounded">
-                    <BiCodeBlock />
-                  </span>
-                  <span className="span">
-                    {repo.language ? repo.language : ""}
-                  </span>
-                </div>
+                {repo.language ? (
+                  <div className="meta-item">
+                    <span className="material-symbols-rounded">
+                      <BiCodeBlock />
+                    </span>
+                    <span className="span">{repo.language}</span>
+                  </div>
+                ) : (
+                  ""
+                )}
                 <div className="meta-item">
                   <span className="material-symbols-rounded">
                     <BsFillStarFill />
