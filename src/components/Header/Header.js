@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsSearch, BsSunFill, BsFillMoonFill } from "react-icons/bs";
+import "./Header.css"
 
 const Header = ({ username, setUsername, handleSearch }) => {
   //DARK MODE

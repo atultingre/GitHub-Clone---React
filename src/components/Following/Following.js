@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaLink } from "react-icons/fa";
 import { GoSmiley } from "react-icons/go";
 
-const Following = ({ username }) => {
+const Following = ({username}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [following, setFollowing] = useState([]);
   const effectRan = useRef(false);
@@ -115,4 +115,4 @@ const Following = ({ username }) => {
   );
 };
 
-export default Following;
+export default React.memo(Following);

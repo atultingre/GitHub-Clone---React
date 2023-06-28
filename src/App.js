@@ -8,10 +8,11 @@ import Navbar from "./components/Navbar/Navbar";
 import Repository from "./components/Repository/Repository";
 import Following from "./components/Following/Following";
 import Header from "./components/Header/Header";
+import NotFound from "./components/ErrorBoundary/ErrorBoundary";
 import { useMemo } from "react";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 const App = () => {
-  // // HEADER
   const [userData, setUserData] = useState(null);
   const [username, setUsername] = useState("atultingre");
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +22,7 @@ const App = () => {
     if (username !== "") {
       setIsLoading(true);
       try {
-        const [user, repo] = await Promise.all([
+        const [user, repo, follow] = await Promise.all([
           axios.get(`https://api.github.com/users/${username}`),
           axios.get(`https://api.github.com/users/${username}/repos`),
         ]);
@@ -41,7 +42,7 @@ const App = () => {
   useMemo(() => {
     handleApiCall();
     // eslint-disable-next-line
-  },[]);
+  }, []);
 
   // useCallback(() => {}, [username]);
 
@@ -62,11 +63,15 @@ const App = () => {
       />
       <main className="main" id="main">
         <div className="container">
-          <Profile userData={userData} isLoading={isLoading} />
+          <ErrorBoundary>
+            <Profile userData={userData} isLoading={isLoading} />
+          </ErrorBoundary>
           <section className="tab-container">
             <Navbar />
             <div className="tab-panel">
+              <ErrorBoundary>
               <Routes>
+
                 <Route
                   path="/"
                   element={
@@ -81,7 +86,7 @@ const App = () => {
                   path="/repos"
                   element={
                     <Repository
-                      username={username}
+                      // username={username}
                       repositories={repositories}
                       isLoading={isLoading}
                     />
@@ -91,6 +96,7 @@ const App = () => {
                   path="/following"
                   element={<Following username={username} />}></Route>
               </Routes>
+              </ErrorBoundary>
             </div>
           </section>
         </div>

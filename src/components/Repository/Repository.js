@@ -3,6 +3,7 @@ import { BiCodeBlock, BiGitRepoForked } from "react-icons/bi";
 import { BsFillStarFill } from "react-icons/bs";
 import { GoSmiley } from "react-icons/go";
 import { numberToKilo } from "../Functions.js";
+import React from "react";
 
 const Repository = ({ repositories, isLoading }) => {
   // const [repositories, setRepositories] = useState([]);
@@ -135,7 +136,7 @@ const Repository = ({ repositories, isLoading }) => {
   );
 };
 
-export default Repository;
+export default React.memo(Repository);
 
 // isLoading ? (
 // <div className="card repo-skeleton">

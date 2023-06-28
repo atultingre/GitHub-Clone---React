@@ -139,7 +139,7 @@
 }
 
 [data-theme="dark"] {
-  color-scheme: dark;
+  /* color-scheme: dark; */
   /* Dark colors */
   
   --background: var(--background-dark);
@@ -174,7 +174,7 @@
 }
 
 [data-theme="light"] {
-  /* color-scheme: light;
+  /* color-scheme: light; */
   
   /* light colors */
   --background: var(--background-light);
