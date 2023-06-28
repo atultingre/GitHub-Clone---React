@@ -8,9 +8,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Repository from "./components/Repository/Repository";
 import Following from "./components/Following/Following";
 import Header from "./components/Header/Header";
-import NotFound from "./components/ErrorBoundary/ErrorBoundary";
 import { useMemo } from "react";
-import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 const App = () => {
   const [userData, setUserData] = useState(null);
@@ -22,7 +20,7 @@ const App = () => {
     if (username !== "") {
       setIsLoading(true);
       try {
-        const [user, repo, follow] = await Promise.all([
+        const [user, repo] = await Promise.all([
           axios.get(`https://api.github.com/users/${username}`),
           axios.get(`https://api.github.com/users/${username}/repos`),
         ]);
@@ -63,15 +61,11 @@ const App = () => {
       />
       <main className="main" id="main">
         <div className="container">
-          <ErrorBoundary>
-            <Profile userData={userData} isLoading={isLoading} />
-          </ErrorBoundary>
+          <Profile userData={userData} isLoading={isLoading} />
           <section className="tab-container">
             <Navbar />
             <div className="tab-panel">
-              <ErrorBoundary>
               <Routes>
-
                 <Route
                   path="/"
                   element={
@@ -96,7 +90,6 @@ const App = () => {
                   path="/following"
                   element={<Following username={username} />}></Route>
               </Routes>
-              </ErrorBoundary>
             </div>
           </section>
         </div>
